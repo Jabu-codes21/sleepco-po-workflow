@@ -13,6 +13,7 @@ export function AppProvider({ children }) {
   const [purchaseOrders, setPurchaseOrders] = useState(initialPurchaseOrders);
   const [auditLogs, setAuditLogs] = useState(initialAuditLogs);
   const [poCounter, setPoCounter] = useState(49);
+  const [sidebarFilter, setSidebarFilter] = useState("all");
 
   const switchRole = useCallback((userId) => {
     const user = users.find((u) => u.id === userId);
@@ -306,6 +307,8 @@ export function AppProvider({ children }) {
         auditLogs,
         getLogsForPO,
         stats,
+        sidebarFilter,
+        setSidebarFilter,
       }}
     >
       {children}
