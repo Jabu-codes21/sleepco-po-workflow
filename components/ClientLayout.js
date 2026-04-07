@@ -3,6 +3,7 @@
 import { AppProvider } from "@/context/AppContext";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import ToastContainer from "./Toast";
 
 export default function ClientLayout({ children }) {
   return (
@@ -20,6 +21,7 @@ export default function ClientLayout({ children }) {
         <main className="ml-64 pt-24 pb-12 px-10 relative z-10">
           {children}
         </main>
+        <ToastContainer />
       </div>
     </AppProvider>
   );

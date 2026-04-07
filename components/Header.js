@@ -35,8 +35,9 @@ export default function Header() {
       </div>
 
       <div className="flex items-center gap-6">
-        {/* Role Switcher */}
-        <div className="relative">
+        {/* View Switcher */}
+        <div className="relative flex items-center gap-2">
+          <span className="text-[10px] text-[#757680] uppercase tracking-wider font-bold">View as</span>
           <select
             value={currentUser.id}
             onChange={(e) => switchRole(e.target.value)}

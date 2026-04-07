@@ -114,3 +114,9 @@ body {
 ::selection {
   background: rgba(108, 196, 254, 0.3);
 }
+
+/* === Animations === */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

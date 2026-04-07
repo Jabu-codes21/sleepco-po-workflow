@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { showToast } from "@/components/Toast";
 import { ROLES } from "@/data/users";
 import { PO_STATUS } from "@/data/purchaseOrders";
 import { vendors } from "@/data/vendors";
@@ -131,25 +132,93 @@ export default function Dashboard() {
       )}
 
       {/* Orders Table */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="font-[var(--font-headline)] text-xl font-bold text-[#011543]">
-              {sidebarFilter === "pending" ? "Pending Orders" : sidebarFilter === "approved" ? "Approved Orders" : "Recent Requisitions"}
-            </h3>
-            <p className="text-xs text-[#45464f]">{filteredPOs.length} order{filteredPOs.length !== 1 ? "s" : ""} in view</p>
-          </div>
-          <div className="flex gap-2">
-            <button className="glass-card px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-white/40 transition-colors text-[#45464f]">
-              <span className="material-symbols-outlined text-sm">filter_list</span>Filters
-            </button>
-            <button className="glass-card px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-white/40 transition-colors text-[#45464f]">
-              <span className="material-symbols-outlined text-sm">download</span>Export
-            </button>
-          </div>
+      <TableSection filteredPOs={filteredPOs} sidebarFilter={sidebarFilter} />
+    </div>
+  );
+}
+
+function TableSection({ filteredPOs, sidebarFilter }) {
+  const [search, setSearch] = useState("");
+
+  const searchedPOs = useMemo(() => {
+    if (!search.trim()) return filteredPOs;
+    const q = search.toLowerCase();
+    return filteredPOs.filter(
+      (po) =>
+        po.poNumber.toLowerCase().includes(q) ||
+        po.vendorName.toLowerCase().includes(q) ||
+        po.department.toLowerCase().includes(q)
+    );
+  }, [filteredPOs, search]);
+
+  const exportCSV = () => {
+    const headers = ["PO Number", "Vendor", "Department", "Amount (INR)", "Status", "Submitted"];
+    const rows = searchedPOs.map((po) => [
+      po.poNumber,
+      po.vendorName,
+      po.department,
+      po.amount,
+      po.status.replace(/_/g, " "),
+      new Date(po.createdAt).toLocaleDateString("en-IN"),
+    ]);
+    const csv = [headers, ...rows].map((r) => r.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `po-export-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast("CSV exported successfully", "success");
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h3 className="font-[var(--font-headline)] text-xl font-bold text-[#011543]">
+            {sidebarFilter === "pending" ? "Pending Orders" : sidebarFilter === "approved" ? "Approved Orders" : "Recent Requisitions"}
+          </h3>
+          <p className="text-xs text-[#45464f]">{searchedPOs.length} order{searchedPOs.length !== 1 ? "s" : ""} in view</p>
         </div>
-        <POTable purchaseOrders={filteredPOs} />
+        <div className="flex gap-2 items-center">
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#757680] text-sm">search</span>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search PO, vendor, dept..."
+              className="bg-white/50 ghost-border rounded-lg pl-9 pr-3 py-2 text-xs w-56 focus:ring-2 focus:ring-[#3B9AD2]/20 outline-none transition-all backdrop-blur-sm"
+            />
+          </div>
+          <button
+            onClick={exportCSV}
+            className="glass-card px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-white/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer text-[#45464f]"
+          >
+            <span className="material-symbols-outlined text-sm">download</span>Export
+          </button>
+        </div>
       </div>
+
+      {searchedPOs.length === 0 && filteredPOs.length === 0 ? (
+        <div className="glass-card rounded-2xl p-16 text-center">
+          <div className="w-16 h-16 rounded-full bg-[#e6f4ea] flex items-center justify-center mx-auto mb-4">
+            <span className="material-symbols-outlined text-[#1a7431] text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+              celebration
+            </span>
+          </div>
+          <h3 className="font-[var(--font-headline)] text-xl font-bold text-[#011543]">All caught up!</h3>
+          <p className="text-sm text-[#45464f] mt-1">No purchase orders pending in this view.</p>
+        </div>
+      ) : searchedPOs.length === 0 ? (
+        <div className="glass-card rounded-2xl p-12 text-center">
+          <span className="material-symbols-outlined text-3xl text-[#c5c6d0] block mb-2">search_off</span>
+          <p className="text-sm text-[#45464f]">No results for &ldquo;{search}&rdquo;</p>
+        </div>
+      ) : (
+        <POTable purchaseOrders={searchedPOs} />
+      )}
     </div>
   );
 }
