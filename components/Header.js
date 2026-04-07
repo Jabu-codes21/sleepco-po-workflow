@@ -66,7 +66,7 @@ export default function Header() {
             {showNotifs && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowNotifs(false)} />
-                <div className="absolute right-0 top-full mt-2 w-80 glass-card rounded-xl overflow-hidden z-50 border border-white/30">
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl overflow-hidden z-50 border border-[#e2e2e2] shadow-xl shadow-[#011543]/10">
                   <div className="px-4 py-3 border-b border-[#c5c6d0]/10 flex items-center justify-between">
                     <span className="text-xs font-bold text-[#011543] uppercase tracking-wider">Notifications</span>
                     <span className="text-[10px] font-bold text-[#006491] bg-[#6cc4fe]/10 px-2 py-0.5 rounded">{notifications.filter(n => n.unread).length} new</span>
