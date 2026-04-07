@@ -8,7 +8,7 @@ const statusStyles = {
   coo_approved: "bg-[#dbe1ff] text-[#041845]",
   pending_cfo: "bg-[#6cc4fe]/20 text-[#005075]",
   cfo_approved: "bg-[#b5c5fb]/30 text-[#354573]",
-  approved: "bg-[#1a2b58] text-[#8393c7]",
+  approved: "bg-[#e6f4ea] text-[#1a7431]",
   rejected: "bg-[#ffdad6] text-[#93000a]",
   clarification_requested: "bg-[#d2e4ff] text-[#001c37]",
 };
@@ -21,7 +21,7 @@ const statusDots = {
   coo_approved: "bg-[#354573]",
   pending_cfo: "bg-[#006491]",
   cfo_approved: "bg-[#4d5d8d]",
-  approved: "bg-[#8393c7]",
+  approved: "bg-[#1a7431]",
   rejected: "bg-[#ba1a1a]",
   clarification_requested: "bg-[#001c37]",
 };
