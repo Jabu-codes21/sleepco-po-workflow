@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* === Sleep Company Glass Design System === */
+
+  /* Primary palette */
+  --color-primary: #011543;
+  --color-primary-container: #1a2b58;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #8393c7;
+  --color-primary-fixed: #dbe1ff;
+
+  /* Secondary palette */
+  --color-secondary: #006491;
+  --color-secondary-container: #6cc4fe;
+  --color-on-secondary-container: #005075;
+  --color-cta: #3B9AD2;
+
+  /* Surface palette */
+  --color-surface: #f9f9f9;
+  --color-surface-container: #eeeeee;
+  --color-surface-container-low: #f3f3f3;
+  --color-surface-container-high: #e8e8e8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-dim: #dadada;
+
+  /* Text palette */
+  --color-on-surface: #1a1c1c;
+  --color-on-surface-variant: #45464f;
+  --color-outline: #757680;
+  --color-outline-variant: #c5c6d0;
+
+  /* Status */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-tertiary-container: #0f2f4e;
+
+  /* Typography */
+  --font-headline: "Manrope", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-label: "Plus Jakarta Sans", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* === Glass & Frosted Effects === */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 8px 32px rgba(26, 43, 88, 0.06);
+}
+
+.frosted-sidebar {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0px 8px 32px rgba(26, 43, 88, 0.06);
+}
+
+.frosted-header {
+  background: rgba(248, 248, 248, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ghost-border {
+  border: 1px solid rgba(197, 198, 208, 0.2);
+}
+
+.ambient-glow {
+  box-shadow: 0px 8px 32px rgba(26, 43, 88, 0.06);
+}
+
+/* === Organic Blobs (positioned via components) === */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* === Selection === */
+::selection {
+  background: rgba(108, 196, 254, 0.3);
 }
