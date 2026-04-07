@@ -27,20 +27,20 @@ export default function ActionButtons({ po }) {
         <div className="flex gap-3">
           <button
             onClick={() => approvePO(po.id)}
-            className="flex-1 px-8 py-3 rounded-lg bg-gradient-to-b from-[#1a2b58] to-[#011543] text-white font-bold shadow-lg shadow-[#011543]/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+            className="flex-1 px-8 py-3 rounded-lg bg-gradient-to-b from-[#1a2b58] to-[#011543] text-white font-bold shadow-lg shadow-[#011543]/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#011543]/30 active:translate-y-0 active:shadow-md transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
           >
             <span className="material-symbols-outlined text-sm">check</span>
             Approve
           </button>
           <button
             onClick={() => setShowReject(true)}
-            className="px-6 py-3 rounded-lg glass-card text-[#011543] font-semibold hover:bg-white/40 transition-all"
+            className="px-6 py-3 rounded-lg glass-card text-[#011543] font-semibold hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#ffdad6]/40 hover:text-[#ba1a1a] active:translate-y-0 active:shadow-sm transition-all duration-200 cursor-pointer"
           >
             Reject
           </button>
           <button
             onClick={() => setShowClarify(true)}
-            className="px-6 py-3 rounded-lg glass-card text-[#011543] font-semibold hover:bg-white/40 transition-all"
+            className="px-6 py-3 rounded-lg glass-card text-[#011543] font-semibold hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#d2e4ff]/40 hover:text-[#006491] active:translate-y-0 active:shadow-sm transition-all duration-200 cursor-pointer"
           >
             Clarify
           </button>
